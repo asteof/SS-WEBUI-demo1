@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Demo 1</title>
+    <script defer type="module" src="main.js"></script>
+</head>
+<body>
+
+<div class="task" id="task1">
+    <div class="task-number">
+        <button value="task1">Task 1</button>
+    </div>
+    <div class="info-btn">i</div>
+    <div class="info">
+        Input - length, width, symbol to display
+    </div>
+
+    <div class="controls">
+        <div class="task-name">Chess board</div>
+        <input type="number" placeholder="Length" id="t1-length" value="5">
+        <input type="number" placeholder="Width" id="t1-width" value="5">
+        <input type="text" placeholder="Symbol" id="t1-symbol" value="*">
+        <button id="t1-submit">Create board</button>
+    </div>
+    <div class="output-container">
+        <div class="result">
+            <div id="t1-status"></div>
+            <div id="t1-reason"></div>
+        </div>
+        <div id="chessBoard" class="output">
+        </div>
+    </div>
+</div>
+
+<div class="task" id="task2">
+    <div class="task-number">
+        <button value="task2">Task 2</button>
+    </div>
+    <div class="info-btn">i</div>
+    <div class="info">
+        Input - 4 numbers
+        <span>a, b, c, d = float, > 0 < 1000000</span>
+        Ex: 12,10,8,5
+    </div>
+
+    <div class="controls">
+        <div class="task-name">Envelopes</div>
+        <input type="text" placeholder="a,b,c,d" id="t2-input" value="10,6,12,7">
+        <button id="t2-submit">Put the envelope in</button>
+    </div>
+    <div class="output-container">
+        <div class="result">
+            <div id="t2-status"></div>
+            <div id="t2-reason"></div>
+        </div>
+        <div>
+            <div class="output" id="envelope"></div>
+        </div>
+    </div>
+</div>
+
+<div class="task" id="task3">
+    <div class="task-number">
+        <button value="task3">Task 3</button>
+    </div>
+    <div class="info-btn">i</div>
+    <div class="info">
+        Input - triangle name, sides
+        <div> Ex: ABC, 10, 20, 22.36</div>
+    </div>
+
+    <div class="controls">
+        <div class="task-name">Triangle sorting</div>
+        <input type="text" placeholder="ABC, 3, 4, 5" id="t3-input" value="ABC, 3, 4, 5">
+        <div>
+            <button id="t3-add">Add triangle</button>
+            <button id="t3-clear">Clear triangles</button>
+        </div>
+    </div>
+    <div>
+        <div id="t3-array"></div>
+        <button id="t3-submit">Calculate</button>
+    </div>
+    <div class="output-container">
+        <div class="result">
+            <div id="t3-status"></div>
+            <div id="t3-reason"></div>
+        </div>
+        <div class="output" id="triangles">
+
+        </div>
+    </div>
+</div>
+
+<div class="task" id="task4">
+    <div class="task-number">
+        <button value="task4">Task 4</button>
+    </div>
+    <div class="info-btn">i</div>
+    <div class="info">
+        Input - integer
+        <span>>= 10 <= 9007199254740991;</span>
+        Ex: 1234437;<br>
+        Out: 3443;
+    </div>
+
+    <div class="controls">
+        <div class="task-name">Palindrome</div>
+        <input type="text" placeholder="1237557222" id="t4-input" value="1237557222">
+        <button id="t4-submit">Check</button>
+    </div>
+    <div class="output-container">
+        <div class="result">
+            <div id="t4-status"></div>
+            <div id="t4-reason"></div>
+        </div>
+        <div>
+            <div class="output" id="palindrome"></div>
+        </div>
+    </div>
+</div>
+
+<div class="task" id="task5">
+    <div class="task-number">
+        <button value="task5">Task 5</button>
+    </div>
+    <div class="info-btn">i</div>
+    <div class="info">
+        Input - min, max
+        <span>min, max in range [1, 999999], integers;</span>
+        Ex: 111111, 888888;<br>
+        Out: {"winner":"easy","tickets":{"countEasy":44985,"countHard":18841}};
+    </div>
+
+    <div class="controls">
+        <div class="task-name">Happy tickets</div>
+        <input type="text" placeholder="min, max" id="t5-input" value="420, 696969">
+        <button id="t5-submit">Check</button>
+    </div>
+    <div class="output-container">
+        <div class="result">
+            <div id="t5-status"></div>
+            <div id="t5-reason"></div>
+        </div>
+        <div>
+            <div class="output" id="tickets"></div>
+        </div>
+    </div>
+</div>
+
+<div class="task" id="task6">
+    <div class="task-number">
+        <button value="task6">Task 6</button>
+    </div>
+    <div class="info-btn">i</div>
+    <div class="info">
+        Input - n, m<br>
+        Ex: 4, 100;<br>
+        Out: 10, 11, 12, 13;
+    </div>
+
+    <div class="controls">
+        <div class="task-name">Numbers</div>
+        <input type="text" placeholder="length, minSquare" id="t6-input" value="22, 144">
+        <button id="t6-submit">Check</button>
+    </div>
+    <div class="output-container">
+        <div class="result">
+            <div id="t6-status"></div>
+            <div id="t6-reason"></div>
+        </div>
+        <div>
+            <div class="output" id="numbers"></div>
+        </div>
+    </div>
+</div>
+
+<div class="task" id="task7">
+    <div class="task-number">
+        <button value="task7">Task 7</button>
+    </div>
+    <div class="info-btn">i</div>
+    <div class="info">
+        Input:
+        <ol>
+            <li>min, max</li>
+            <li>length</li>
+        </ol>
+        <span>min/max/length >1, integers</span>
+        Ex:
+        <ol>
+            <li>500, 8000</li>
+            <li>L4</li>
+        </ol>
+        Out:
+        <ol>
+            <li>610, 987, 1597, 2584, 4181, 6765</li>
+            <li>1597, 2584, 4181, 6765</li>
+        </ol>
+    </div>
+
+    <div class="controls">
+        <div class="task-name">Fibonacci sequence</div>
+        <input type="text" placeholder="min, max" id="t7-input" value="68, 8400">
+        <button id="t7-submit">Check</button>
+    </div>
+    <div class="output-container">
+        <div class="result">
+            <div id="t7-status"></div>
+            <div id="t7-reason"></div>
+        </div>
+        <div>
+            <div class="output" id="fibonacci"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
