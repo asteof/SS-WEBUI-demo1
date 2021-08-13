@@ -29,7 +29,7 @@ export const toggleError = (dom, app = false) => {
 
 const sizeButtons = [...document.querySelectorAll('.task-number button')];
 
-const toggleElement2 = e => {
+const toggleElement = e => {
     const element = document.getElementById(e.target.value);
     if (parseInt(element.style.height) > 82 || parseInt(element.style.width) > 82) {
         element.style.height = '80%';
@@ -41,10 +41,9 @@ const toggleElement2 = e => {
 }
 
 sizeButtons.forEach(el => {
-    el.addEventListener('click', toggleElement2);
+    el.addEventListener('click', toggleElement);
 });
 
-/**/
 dom.task1Submit.addEventListener('click', task1);
 dom.task2Submit.addEventListener('click', task2);
 dom.task3Submit.addEventListener('click', task3);
@@ -52,6 +51,3 @@ dom.task4Submit.addEventListener('click', task4);
 dom.task5Submit.addEventListener('click', task5);
 dom.task6Submit.addEventListener('click', task6);
 dom.task7Submit.addEventListener('click', task7);
-
-/**/
-

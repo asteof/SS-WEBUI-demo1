@@ -8,36 +8,44 @@ const dom = {
 }
 
 export const task5 = () => {
-    const string = dom.input.value;
-    happyTickets(string);
+    const input = dom.input.value;
+    happyTickets(input);
 }
 
 const happyTickets = (string) => {
     const {app, context} = parseInput(string);
 
     if (app.status === 'ok') {
-        let countEasy = 0;
-        let countHard = 0;
-
-        for (let i = context.min; i < context.max; i += 1) {
-            countEasy += checkTicketEasy(i);
-            countHard += checkTicketHard(i);
-        }
-
-        const winner = countEasy > countHard ? 'easy' : countEasy === countHard ? 'both' : 'hard';
-        const result = {
-            winner,
-            tickets: {countEasy, countHard}
-        };
-
+        dom.input.value = `${ context.min }, ${ context.max }`;
+        const happyTickets = getHappyTickets(context);
         toggleError(dom);
-        dom.output.textContent = JSON.stringify(result);
+        dom.output.textContent = JSON.stringify(happyTickets);
     } else {
         toggleError(dom, app);
     }
 }
 
-const checkTicketEasy = (number) => {
+export const getHappyTickets = (context) => {
+    let countEasy = 0;
+    let countHard = 0;
+
+    for (let i = context.min; i < context.max; i += 1) {
+        countEasy += checkTicketEasy(i);
+        countHard += checkTicketHard(i);
+    }
+
+    let winner;
+    if (countEasy > countHard) {
+        winner = 'easy';
+    } else if (countEasy === countHard) {
+        winner = 'both';
+    } else {
+        winner = 'hard';
+    }
+    return {winner, tickets: {countEasy, countHard}};
+}
+
+export const checkTicketEasy = (number) => {
     const digits = [...number.toString()].map(el => parseInt(el));
     const sumReducer = (a, b) => a + b;
     const length = digits.length;
@@ -49,7 +57,7 @@ const checkTicketEasy = (number) => {
     return false;
 }
 
-const checkTicketHard = (number) => {
+export const checkTicketHard = (number) => {
     const digits = [...number.toString()].map(el => parseInt(el));
 
     const even = digits.reduce((a, b) => b % 2 === 0 ? a + b : a, 0);
@@ -57,7 +65,7 @@ const checkTicketHard = (number) => {
     return even === odd;
 }
 
-const parseInput = (string) => {
+export const parseInput = (string) => {
     const app = {
         status: 'ok',
         reason: null,
@@ -65,28 +73,26 @@ const parseInput = (string) => {
             this.status = 'failed';
             this.reason = string;
         }
-    }
+    };
 
-    const context = string.split(/,\s+/).map(el => parseInt(el));
+    const context = string.split(/,\s*/).map(el => parseInt(el));
 
-
-    if (context.length > 2) {
-        app.fail(`There can be only two arguments. Inputted ${ context.length }`);
+    if (context.length !== 2) {
+        app.fail(`There can be only two arguments`);
         return {app};
     }
 
     const [min, max] = context.sort((a, b) => a - b);
 
-    if (isNaN(min) || isNaN(max)){
+    if (isNaN(min) || isNaN(max)) {
         app.fail('Couldn\'t parse a number');
         return {app};
     }
 
-     if ((min < 1 || min > 999999) || (max < 1 || max > 999999)) {
+    if ((min < 1 || min > 999999) || (max < 1 || max > 999999)) {
         app.fail(`Input does not satisfy condition 1 <= input <= 999999`);
-        return {app}
+        return {app};
     }
 
-    dom.input.value = `${min}, ${max}`;
     return {app, context: {min, max}};
 }

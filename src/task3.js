@@ -17,11 +17,11 @@ export const task3 = () => {
     calculateTriangles();
 }
 
-const triangleArea = (triangle) => {
+export const triangleArea = (triangle) => {
     const [vertices, a, b, c] = Object.values(triangle);
 
     const p = (a + b + c) / 2;
-    const area = (p * (p - a) * (p - b) * (p - c)) ** (1 / 2);
+    const area = Math.trunc((p * (p - a) * (p - b) * (p - c)) ** (1 / 2));
     return {
         vertices,
         area,
@@ -33,28 +33,27 @@ const triangleArea = (triangle) => {
 
 const calculateTriangles = () => {
     if (arrayOfTriangles.length > 0) {
-        const arrayOfAreas = arrayOfTriangles.map(el => triangleArea(el));
-        arrayOfAreas.sort((a, b) => b.area - a.area);
+        const triangleAreas = arrayOfTriangles.map(el => triangleArea(el));
+        triangleAreas.sort((a, b) => b.area - a.area);
 
-        dom.output.textContent = arrayOfAreas.join(', ');
+        dom.output.textContent = triangleAreas.join(', ');
         toggleError(dom);
     }
 }
 
-const addTriangle = (string) => {
-    const {app, triangle} = parseInput(string);
+const addTriangle = (input) => {
+    const {app, triangle} = parseInput(input);
 
     if (app.status === 'ok') {
         arrayOfTriangles.push(triangle);
-        // dom.array.textContent +=triangle.toString() ;
-        dom.array.innerHTML += `<div> ${ triangle.toString() }  </div>`;
+        dom.array.innerHTML += `<div> ${ triangle.toString() } </div>`;
         toggleError(dom);
     } else {
         toggleError(dom, app);
     }
 }
 
-const parseInput = (string) => {
+export const parseInput = (string) => {
     const app = {
         status: 'ok',
         reason: null,
@@ -64,28 +63,41 @@ const parseInput = (string) => {
         }
     };
 
-    const values = string.split(/,\s*/);
-    const vertices = values.shift().toUpperCase();
-    const sideNames = [...vertices.toLowerCase()];
-    //parse string element to float
-    //could use map :/
-    values.forEach((el, i, arr) => arr.splice(i, 1, parseFloat(el)));
+    if (typeof string !== 'string') {
+        app.fail(`Input is not a string`);
+        return {app};
+    }
 
-    if (vertices.length < 3 || vertices.length > 3) {
+    const triangleData = string.split(/,\s*/);
+    const vertices = triangleData.shift().toUpperCase();
+    const sideNames = [...vertices.toLowerCase()];
+    //parse string to float
+    //triangleData.forEach((el, i, arr) => arr[i] = parseFloat(el));
+    const sides = triangleData.map(el => parseFloat(el));
+
+    const verticesLength = vertices.length;
+    const sidesLength = sides.length;
+
+    if (verticesLength < 3 || verticesLength > 3) {
         app.fail(`${ vertices } length is not 3. Triangle name must contain only 3 letters`);
         return {app};
     }
 
-    if (values.length < 3 || values.length > 3) {
-        app.fail(`Triangle can have only 3 sides. You specified ${ values.length } sides`);
+    if (sidesLength < 3 || sidesLength > 3) {
+        app.fail(`Triangle can have only 3 sides. You specified ${ sidesLength } sides`);
         return {app};
     }
 
-    if (!(
-        (values[0] + values[1] > values[2]) &&
-        (values[1] + values[2] > values[0]) &&
-        (values[0] + values[2] > values[1])
-    )) {
+    for (let i = 0; i < sidesLength; i++) {
+        if (isNaN(sides[i])) {
+            app.fail(`${ triangleData[i] } is not a number`);
+            return {app};
+        }
+    }
+
+    if (!((sides[0] + sides[1] > sides[2]) &&
+        (sides[1] + sides[2] > sides[0]) &&
+        (sides[0] + sides[2] > sides[1]))) {
         app.fail(`Triangle can exist only if sum of its 2 sides is greater than 3rd side`);
         return {app};
     }
@@ -112,17 +124,12 @@ const parseInput = (string) => {
 
     const triangle = {
         vertices,
-        [sideNames[0]]: values[0],
-        [sideNames[1]]: values[1],
-        [sideNames[2]]: values[2],
+        [sideNames[0]]: sides[0],
+        [sideNames[1]]: sides[1],
+        [sideNames[2]]: sides[2],
         toString() {
-            const ar = [];
-            for (const el in this) {
-                ar.push(`${ el } = ${ this[el] }`);
-            }
-            ar.pop();
-            ar.shift();
-            return `${ this.vertices }: ${ ar.join(', ') };\n`;
+            const sides = Object.values(this).slice(1, 4);
+            return `${ this.vertices }: ${ sides.join(', ') };\n`;
         }
     };
 
@@ -136,6 +143,6 @@ dom.clearTriangles.addEventListener('click', () => {
 })
 
 dom.addTriangle.addEventListener('click', () => {
-    const string = dom.input.value;
-    addTriangle(string);
+    const input = dom.input.value;
+    addTriangle(input);
 })

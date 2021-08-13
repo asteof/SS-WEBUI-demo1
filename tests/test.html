@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/9.0.3/mocha.css"
+          integrity="sha512-Ytt2foRGKdIInPXwyS3gxRvfTv4n2wi7uB7neCLH1LjExT+PKBeQu6LNVB4QpHaJqx7m2btagBs4kqxYC1QNFg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/9.0.3/mocha.min.js"
+            integrity="sha512-r4fa9GW4K2tLEWDXoPglLzQxCj2gd9j01XPKckImNPhbkoLbMtchdCEQDFFzkj9rdOZ33TYzZIwMUJtgpvPmqQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.3.4/chai.min.js"
+            integrity="sha512-gkZWobgJrQevN2HMEeTnSlxWPJ3HS0JJ3nXcgI6XLK/NI0z59jbztRZqbTlIzfl21vIGahQaeW0knwH1az/tbg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+    <title>Tests</title>
+    <style>
+        .test-- {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="test--">
+    <div class="task" id="task1">
+        <input type="number" placeholder="Length" id="t1-length" value="5">
+        <input type="number" placeholder="Width" id="t1-width" value="5">
+        <input type="text" placeholder="Symbol" id="t1-symbol" value="*">
+        <button id="t1-submit">Create board</button>
+        <div id="t1-status"></div>
+        <div id="t1-reason"></div>
+        <div id="chessBoard" class="output"></div>
+    </div>
+
+    <div class="task" id="task2">
+        <input type="text" placeholder="a,b,c,d" id="t2-input" value="10,6,12,7">
+        <button id="t2-submit">Put the envelope in</button>
+        <div id="t2-status"></div>
+        <div id="t2-reason"></div>
+        <div class="output" id="envelope"></div>
+    </div>
+
+    <div class="task" id="task3">
+        <input type="text" placeholder="ABC, 3, 4, 5" id="t3-input" value="ABC, 3, 4, 5">
+        <button id="t3-add">Add triangle</button>
+        <button id="t3-clear">Clear triangles</button>
+        <div id="t3-array"></div>
+        <button id="t3-submit">Calculate</button>
+        <div id="t3-status"></div>
+        <div id="t3-reason"></div>
+        <div class="output" id="triangles"></div>
+    </div>
+
+    <div class="task" id="task4">
+        <input type="text" placeholder="1237557222" id="t4-input" value="1237557222">
+        <button id="t4-submit">Check</button>
+        <div id="t4-status"></div>
+        <div id="t4-reason"></div>
+        <div class="output" id="palindrome"></div>
+    </div>
+
+    <div class="task" id="task5">
+        <input type="text" placeholder="min, max" id="t5-input" value="420, 696969">
+        <button id="t5-submit">Count happy tickets</button>
+        <div id="t5-status"></div>
+        <div id="t5-reason"></div>
+        <div class="output" id="tickets"></div>
+    </div>
+
+    <div class="task" id="task6">
+        <input type="text" placeholder="length, minSquare" id="t6-input" value="22, 144">
+        <button id="t6-submit">Check</button>
+        <div id="t6-status"></div>
+        <div id="t6-reason"></div>
+        <div class="output" id="numbers"></div>
+    </div>
+
+    <div class="task" id="task7">
+        <input type="text" placeholder="min, max" id="t7-input" value="68, 8400">
+        <button id="t7-submit">Generate</button>
+        <div id="t7-status"></div>
+        <div id="t7-reason"></div>
+        <div class="output" id="fibonacci"></div>
+    </div>
+</div>
+
+<script src="../main.js" type="module"></script>
+<script src="task1tests.js" type="module"></script>
+<script src="task2tests.js" type="module"></script>
+<script src="task3tests.js" type="module"></script>
+<script src="task4tests.js" type="module"></script>
+<script src="task5tests.js" type="module"></script>
+<script src="task6tests.js" type="module"></script>
+<script src="task7tests.js" type="module"></script>
+<div id="mocha"></div>
+</body>
+</html>

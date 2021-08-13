@@ -5,65 +5,70 @@ const dom = {
     status: document.getElementById('t7-status'),
     reason: document.getElementById('t7-reason'),
     output: document.getElementById('fibonacci'),
-}
+};
 
 export const task7 = () => {
-    const string = dom.input.value;
-    selectiveFibonacci(string)
+    const input = dom.input.value;
+    displayFibonacci(input);
 }
 
-const selectiveFibonacci = (string) => {
-    const {app, parsed} = parseInput(string);
+const displayFibonacci = (string) => {
+    const {app, parsed, domInputText} = parseInput(string);
     if (app.status === 'ok') {
-        let result;
-        if (parsed.min && parsed.max) {
-            result = fibonacciSequenceMax(parsed.max).filter(el => el > parsed.min);
-        } else if (parsed.length) {
-            result = fibonacciSequenceLength(parsed.length)
-        }
-
+        dom.input.value = domInputText;
+        const outputString = calculateFibonacci(parsed)
         toggleError(dom);
-        dom.output.textContent = result.join(', ');
+        dom.output.textContent = outputString;
     } else {
         toggleError(dom, app);
     }
 }
 
+export const calculateFibonacci = (parsed) => {
+    let fib;
+    if (parsed.min && parsed.max) {
+        fib = fibonacciSequenceMax(parsed.min, parsed.max)
+    } else if (parsed.length) {
+        fib = fibonacciSequenceLength(parsed.length);
+    }
+    return fib.join(', ');
+}
 
-const fibonacciSequenceLength = (length) => {
+export const fibonacciSequenceLength = (length) => {
     let a = 1;
     let fib = 0;
     let next = 0;
-    const result = [];
+    const sequence = [];
 
     for (let i = 0; a.toString().length <= length; i++) {
         if (a.toString().length === length) {
-            result.push(a);
+            sequence.push(a);
         }
         next = a;
         a = a + fib;
         fib = next;
     }
-    return result;
+    return sequence;
 }
 
-
-const fibonacciSequenceMax = (number) => {
+export const fibonacciSequenceMax = (min, max) => {
     let a = 1;
     let fib = 0;
     let next = 0;
-    const result = [];
+    const sequence = [];
 
-    while (fib < number) {
+    while (fib < max) {
         next = a;
         a = a + fib;
-        result.push(fib);
+        if (fib > min) {
+            sequence.push(fib);
+        }
         fib = next;
     }
-    return result;
+    return sequence;
 }
 
-const parseInput = (string) => {
+export const parseInput = (string) => {
     const app = {
         status: 'ok',
         reason: null,
@@ -75,22 +80,26 @@ const parseInput = (string) => {
 
     const rangeRegEx = /\d+,\s*\d+/;
     const lengthRegEx = /l\d+/i;
-    let parsedTemp = [];
     const parsed = {};
+    let domInputText = '';
 
     if (rangeRegEx.test(string)) {
-        parsedTemp = string.split(/,\s*/).map(el => parseInt(el)).sort((a, b) => a - b);
-        [parsed.min, parsed.max] = parsedTemp;
+        [parsed.min, parsed.max] = string
+            .split(/,\s*/)
+            .map(el => parseInt(el))
+            .sort((a, b) => a - b);
+        domInputText = `${ parsed.min }, ${ parsed.max }`;
     } else if (lengthRegEx.test(string)) {
-        parsedTemp = string.match(/\d+/);
+        const parsedTemp = string.match(/\d+/);
         parsed.length = parseInt(parsedTemp[0]);
-        dom.input.value = `l${ parsed.length }`
+        domInputText = `l${ parsed.length }`;
     } else {
         app.fail('Input cannot be parsed');
     }
 
     for (const el in parsed) {
-        const elName = el.toString().charAt(0).toUpperCase() + el.toString().slice(1);
+        const stringEl = el.toString();
+        const elName = `${ stringEl[0].toUpperCase() }${ stringEl.slice(1) }`; //charAt(0)???
         const value = parsed[el];
 
         if (value < 1) {
@@ -101,11 +110,11 @@ const parseInput = (string) => {
             app.fail(`${ elName } value cannot be more than 2^53-1`);
             return {app};
         }
-        if (el.toString() === 'length' && value > 16) {
-            app.fail(`Length cannot be more than 16`);
+        if (stringEl === 'length' && value > 16) {
+            app.fail('Length cannot be more than 16');
             return {app};
         }
     }
-
-    return {app, parsed};
+    // console.log(app, parsed, domInputText); testing purposes
+    return {app, parsed, domInputText};
 }
