@@ -7,6 +7,8 @@ const dom = {
     output: document.getElementById('fibonacci'),
 };
 
+// function order not changed
+
 export const task7 = () => {
     const input = dom.input.value;
     displayFibonacci(input);

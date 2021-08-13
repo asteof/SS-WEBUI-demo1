@@ -13,46 +13,6 @@ const dom = {
 
 const arrayOfTriangles = [];
 
-export const task3 = () => {
-    calculateTriangles();
-}
-
-export const triangleArea = (triangle) => {
-    const [vertices, a, b, c] = Object.values(triangle);
-
-    const p = (a + b + c) / 2;
-    const area = Math.trunc((p * (p - a) * (p - b) * (p - c)) ** (1 / 2));
-    return {
-        vertices,
-        area,
-        toString() {
-            return `${ this.vertices }`;
-        }
-    };
-}
-
-const calculateTriangles = () => {
-    if (arrayOfTriangles.length > 0) {
-        const triangleAreas = arrayOfTriangles.map(el => triangleArea(el));
-        triangleAreas.sort((a, b) => b.area - a.area);
-
-        dom.output.textContent = triangleAreas.join(', ');
-        toggleError(dom);
-    }
-}
-
-const addTriangle = (input) => {
-    const {app, triangle} = parseInput(input);
-
-    if (app.status === 'ok') {
-        arrayOfTriangles.push(triangle);
-        dom.array.innerHTML += `<div> ${ triangle.toString() } </div>`;
-        toggleError(dom);
-    } else {
-        toggleError(dom, app);
-    }
-}
-
 export const parseInput = (string) => {
     const app = {
         status: 'ok',
@@ -134,6 +94,46 @@ export const parseInput = (string) => {
     };
 
     return {app, triangle};
+}
+
+export const triangleArea = (triangle) => {
+    const [vertices, a, b, c] = Object.values(triangle);
+
+    const p = (a + b + c) / 2;
+    const area = Math.trunc((p * (p - a) * (p - b) * (p - c)) ** (1 / 2));
+    return {
+        vertices,
+        area,
+        toString() {
+            return `${ this.vertices }`;
+        }
+    };
+}
+
+const calculateTriangles = () => {
+    if (arrayOfTriangles.length > 0) {
+        const triangleAreas = arrayOfTriangles.map(el => triangleArea(el));
+        triangleAreas.sort((a, b) => b.area - a.area);
+
+        dom.output.textContent = triangleAreas.join(', ');
+        toggleError(dom);
+    }
+}
+
+const addTriangle = (input) => {
+    const {app, triangle} = parseInput(input);
+
+    if (app.status === 'ok') {
+        arrayOfTriangles.push(triangle);
+        dom.array.innerHTML += `<div> ${ triangle.toString() } </div>`;
+        toggleError(dom);
+    } else {
+        toggleError(dom, app);
+    }
+}
+
+export const task3 = () => {
+    calculateTriangles();
 }
 
 dom.clearTriangles.addEventListener('click', () => {

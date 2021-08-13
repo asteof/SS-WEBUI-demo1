@@ -7,9 +7,36 @@ const dom = {
     output: document.getElementById('tickets'),
 }
 
-export const task5 = () => {
-    const input = dom.input.value;
-    happyTickets(input);
+export const parseInput = (string) => {
+    const app = {
+        status: 'ok',
+        reason: null,
+        fail(string) {
+            this.status = 'failed';
+            this.reason = string;
+        }
+    };
+
+    const context = string.split(/,\s*/).map(el => parseInt(el));
+
+    if (context.length !== 2) {
+        app.fail(`There can be only two arguments`);
+        return {app};
+    }
+
+    const [min, max] = context.sort((a, b) => a - b);
+
+    if (isNaN(min) || isNaN(max)) {
+        app.fail('Couldn\'t parse a number');
+        return {app};
+    }
+
+    if ((min < 1 || min > 999999) || (max < 1 || max > 999999)) {
+        app.fail(`Input does not satisfy condition 1 <= input <= 999999`);
+        return {app};
+    }
+
+    return {app, context: {min, max}};
 }
 
 const happyTickets = (string) => {
@@ -65,34 +92,7 @@ export const checkTicketHard = (number) => {
     return even === odd;
 }
 
-export const parseInput = (string) => {
-    const app = {
-        status: 'ok',
-        reason: null,
-        fail(string) {
-            this.status = 'failed';
-            this.reason = string;
-        }
-    };
-
-    const context = string.split(/,\s*/).map(el => parseInt(el));
-
-    if (context.length !== 2) {
-        app.fail(`There can be only two arguments`);
-        return {app};
-    }
-
-    const [min, max] = context.sort((a, b) => a - b);
-
-    if (isNaN(min) || isNaN(max)) {
-        app.fail('Couldn\'t parse a number');
-        return {app};
-    }
-
-    if ((min < 1 || min > 999999) || (max < 1 || max > 999999)) {
-        app.fail(`Input does not satisfy condition 1 <= input <= 999999`);
-        return {app};
-    }
-
-    return {app, context: {min, max}};
+export const task5 = () => {
+    const input = dom.input.value;
+    happyTickets(input);
 }

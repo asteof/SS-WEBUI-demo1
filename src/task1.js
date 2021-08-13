@@ -9,44 +9,6 @@ const dom = {
     reason: document.getElementById('t1-reason'),
 }
 
-export const task1 = () => {
-    const length = dom.length.value;
-    const width = dom.width.value;
-    const symbol = dom.symbol.value;
-    createBoard(length, width, symbol);
-}
-
-const createBoard = (length, width, symbol) => {
-    const {app, parsed: p} = parseInput(length, width, symbol);
-    if (app.status === 'ok') {
-        const output = generateString(p.length, p.width, p.symbol);// inline??
-        dom.output.textContent = output;
-        toggleError(dom);
-    } else {
-        toggleError(dom, app);
-    }
-}
-
-export const generateString = (length, width, symbol) => {
-    const amountOfSymbols = length * width;
-    let output = '';
-
-    let row = 1;
-    for (let i = 1; i < amountOfSymbols + 1; i += 1) {
-        if (i % width === 0) {
-            if (row % 2 === 0) {
-                output += symbol + '\n';
-            } else {
-                output += symbol + '\n ';
-            }
-            row += 1;
-        } else {
-            output += symbol + ' ';
-        }
-    }
-    return output;
-}
-
 export const parseInput = (length, width, symbol) => {
     const app = {
         status: 'ok',
@@ -82,5 +44,43 @@ export const parseInput = (length, width, symbol) => {
     }
 
     return {app, parsed: {length, width, symbol}};
+}
+
+export const generateString = (length, width, symbol) => {
+    const amountOfSymbols = length * width;
+    let output = '';
+
+    let row = 1;
+    for (let i = 1; i < amountOfSymbols + 1; i += 1) {
+        if (i % width === 0) {
+            if (row % 2 === 0) {
+                output += symbol + '\n';
+            } else {
+                output += symbol + '\n ';
+            }
+            row += 1;
+        } else {
+            output += symbol + ' ';
+        }
+    }
+    return output;
+}
+
+const createBoard = (length, width, symbol) => {
+    const {app, parsed: p} = parseInput(length, width, symbol);
+    if (app.status === 'ok') {
+        const output = generateString(p.length, p.width, p.symbol);// inline??
+        dom.output.textContent = output;
+        toggleError(dom);
+    } else {
+        toggleError(dom, app);
+    }
+}
+
+export const task1 = () => {
+    const length = dom.length.value;
+    const width = dom.width.value;
+    const symbol = dom.symbol.value;
+    createBoard(length, width, symbol);
 }
 

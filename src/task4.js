@@ -7,9 +7,27 @@ const dom = {
     output: document.getElementById('palindrome'),
 };
 
-export const task4 = () => {
-    const input = dom.input.value;
-    checkPalindrome(input);
+export const parseInput = (string) => {
+    const app = {
+        status: 'ok',
+        reason: null,
+        fail(string) {
+            this.status = 'failed';
+            this.reason = string;
+        }
+    }
+
+    const parsed = parseInt(string, 10);
+    if (isNaN(parsed)) {
+        app.fail(`Input must include only digits. "${ string }" is not a number`);
+        return {app};
+    }
+
+    if (parsed < 10 || parsed > Number.MAX_SAFE_INTEGER) {
+        app.fail(`Your number does not satisfy the condition 10 <= x <= 9007199254740991`);
+        return {app};
+    }
+    return {app, parsed: parsed.toString()};
 }
 
 export const checkPalindrome = (string) => {
@@ -56,25 +74,7 @@ export const getLongestPalindrome = (string) => {
     return longestPalindrome;
 }
 
-export const parseInput = (string) => {
-    const app = {
-        status: 'ok',
-        reason: null,
-        fail(string) {
-            this.status = 'failed';
-            this.reason = string;
-        }
-    }
-
-    const parsed = parseInt(string, 10);
-    if (isNaN(parsed)) {
-        app.fail(`Input must include only digits. "${ string }" is not a number`);
-        return {app};
-    }
-
-    if (parsed < 10 || parsed > Number.MAX_SAFE_INTEGER) {
-        app.fail(`Your number does not satisfy the condition 10 <= x <= 9007199254740991`);
-        return {app};
-    }
-    return {app, parsed: parsed.toString()};
+export const task4 = () => {
+    checkPalindrome(input);
+    const input = dom.input.value;
 }

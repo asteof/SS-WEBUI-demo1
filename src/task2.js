@@ -7,40 +7,6 @@ const dom = {
     output: document.getElementById('envelope'),
 }
 
-export const task2 = () => {
-    const input = dom.input.value;
-    envelopes(input);
-}
-
-export const envelopes = (string) => {
-    const {app, en1, en2} = parseInput(string);
-
-    if (app.status === 'ok') {
-        dom.input.value = `${ Object.values(en1).toString() },${ Object.values(en2).toString() }`
-        dom.output.textContent = calculateAreas(en1, en2).toString();
-        toggleError(dom);
-    } else {
-        toggleError(dom, app);
-        dom.output.textContent = '';
-    }
-}
-
-export const calculateAreas = (en1, en2) => {
-    const area1 = en1.l * en1.w;
-    const area2 = en2.l * en2.w;
-    let result;
-
-    if (area1 < area2) {
-        result = 1;
-    } else if (area1 > area2) {
-        result = 2;
-    } else {
-        result = 0;
-    }
-
-    return result;
-}
-
 export const parseInput = (string) => {
     const app = {
         status: 'ok',
@@ -79,4 +45,38 @@ export const parseInput = (string) => {
     }
 
     return {app, en1: {l: parsed[0], w: parsed[1]}, en2: {l: parsed[2], w: parsed[3]}}
+}
+
+export const calculateAreas = (en1, en2) => {
+    const area1 = en1.l * en1.w;
+    const area2 = en2.l * en2.w;
+    let result;
+
+    if (area1 < area2) {
+        result = 1;
+    } else if (area1 > area2) {
+        result = 2;
+    } else {
+        result = 0;
+    }
+
+    return result;
+}
+
+export const envelopes = (string) => {
+    const {app, en1, en2} = parseInput(string);
+
+    if (app.status === 'ok') {
+        dom.input.value = `${ Object.values(en1).toString() },${ Object.values(en2).toString() }`
+        dom.output.textContent = calculateAreas(en1, en2).toString();
+        toggleError(dom);
+    } else {
+        toggleError(dom, app);
+        dom.output.textContent = '';
+    }
+}
+
+export const task2 = () => {
+    const input = dom.input.value;
+    envelopes(input);
 }
