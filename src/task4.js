@@ -46,8 +46,8 @@ export const getLongestPalindrome = (string) => {
     const palindromes = [];
     let stringCopy = string;
 
-    for (let i = 0; i < string.length; i++) {
-        for (let j = 0; j < stringCopy.length; j++) {
+    for (let i = 0; i < string.length; i += 1) {
+        for (let j = 0; j < stringCopy.length; j += 1) {
             const p = string.slice(i, j + i + 1);
             const pReverse = [...p].reverse().join('');
 
@@ -75,6 +75,6 @@ export const getLongestPalindrome = (string) => {
 }
 
 export const task4 = () => {
-    checkPalindrome(input);
     const input = dom.input.value;
+    checkPalindrome(input);
 }

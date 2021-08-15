@@ -57,8 +57,11 @@ export const getHappyTickets = (context) => {
     let countHard = 0;
 
     for (let i = context.min; i < context.max; i += 1) {
-        countEasy += checkTicketEasy(i);
-        countHard += checkTicketHard(i);
+        const digits = i.toString()
+            .match(/\d/g)
+            .map(el => parseInt(el));
+        countEasy += checkTicketEasy(digits);
+        countHard += checkTicketHard(digits);
     }
 
     let winner;
@@ -72,8 +75,7 @@ export const getHappyTickets = (context) => {
     return {winner, tickets: {countEasy, countHard}};
 }
 
-export const checkTicketEasy = (number) => {
-    const digits = [...number.toString()].map(el => parseInt(el));
+export const checkTicketEasy = (digits) => {
     const sumReducer = (a, b) => a + b;
     const length = digits.length;
     if (length === 6) {
@@ -84,9 +86,7 @@ export const checkTicketEasy = (number) => {
     return false;
 }
 
-export const checkTicketHard = (number) => {
-    const digits = [...number.toString()].map(el => parseInt(el));
-
+export const checkTicketHard = (digits) => {
     const even = digits.reduce((a, b) => b % 2 === 0 ? a + b : a, 0);
     const odd = digits.reduce((a, b) => b % 2 !== 0 ? a + b : a, 0);
     return even === odd;

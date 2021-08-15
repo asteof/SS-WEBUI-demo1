@@ -54,13 +54,13 @@ export const generateString = (length, width, symbol) => {
     for (let i = 1; i < amountOfSymbols + 1; i += 1) {
         if (i % width === 0) {
             if (row % 2 === 0) {
-                output += symbol + '\n';
+                output += `${ symbol }\n`;
             } else {
-                output += symbol + '\n ';
+                output += `${ symbol }\n `;
             }
             row += 1;
         } else {
-            output += symbol + ' ';
+            output += `${symbol} `;
         }
     }
     return output;

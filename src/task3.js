@@ -105,9 +105,10 @@ export const triangleArea = (triangle) => {
         vertices,
         area,
         toString() {
-            return `${ this.vertices }`;
+            return this.vertices;
         }
     };
+    // return `${ this.vertices }: area`;
 }
 
 const calculateTriangles = () => {

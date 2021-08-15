@@ -81,27 +81,27 @@ describe('TASK5', () => {
     describe('checkTicketEasy', () => {
 
         it('should return true', () => {
-            const res = checkTicketEasy('420024');
+            const res = checkTicketEasy([4, 2, 0, 0, 2, 4]);
             assert.equal(res, true);
         });
 
         it('should return false', () => {
-            const res = checkTicketEasy('7557');
+            const res = checkTicketEasy([7, 5, 5, 7]);
             assert.equal(res, false);
         });
 
         it('should return true', () => {
-            const res = checkTicketEasy('666666');
+            const res = checkTicketEasy([6, 6, 6, 6, 6, 6]);
             assert.equal(res, true);
         });
 
         it('should return true', () => {
-            const res = checkTicketEasy('128056');
+            const res = checkTicketEasy([1, 2, 8, 0, 5, 6]);
             assert.equal(res, true);
         });
 
         it('should return false', () => {
-            const res = checkTicketEasy('128057');
+            const res = checkTicketEasy([1, 2, 8, 0, 5, 7]);
             assert.equal(res, false);
         });
 
@@ -110,32 +110,32 @@ describe('TASK5', () => {
     describe('checkTicketHard', () => {
 
         it('should return true', () => {
-            const res = checkTicketHard('1403');
+            const res = checkTicketHard([1, 4, 0, 3]);
             assert.equal(res, true);
         });
 
         it('should return true', () => {
-            const res = checkTicketHard('2451');
+            const res = checkTicketHard([2, 4, 5, 1]);
             assert.equal(res, true);
         });
 
         it('should return true', () => {
-            const res = checkTicketHard('650054');
+            const res = checkTicketHard([6, 5, 0, 0, 5, 4]);
             assert.equal(res, true);
         });
 
         it('should return false', () => {
-            const res = checkTicketHard('420024');
+            const res = checkTicketHard([4, 2, 0, 0, 2, 4]);
             assert.equal(res, false);
         });
 
         it('should return false', () => {
-            const res = checkTicketHard('7557');
+            const res = checkTicketHard([7, 5, 5, 7]);
             assert.equal(res, false);
         });
 
         it('should return false', () => {
-            const res = checkTicketHard('666666');
+            const res = checkTicketHard([6, 6, 6, 6, 6, 6]);
             assert.equal(res, false);
         });
     });
